@@ -25,13 +25,14 @@ namespace AutoSuit
                 if (equipper == null) return;
                 JetpackItem jetpack = LocalPlayer.Instance.gameObject.GetComponentInChildren<JetpackItem>();
                 FlyJetpack flyAbility = (FlyJetpack)flyAbilityField.GetValue(jetpack);
-                if (type == AirlockPressurizationType.Pressurize && flyAbility.Enabled)
+                if (type == AirlockPressurizationType.Pressurize)
                 {
                     DelayDo(() => { if (flyAbility.Enabled) equipper.ToggleEquippedItem(); }, 2000); //TODO replace with VoidManager.Utilities.Tools.DelayDo
                 }
                 else
                 {
-                    equipper.ToggleEquippedItem();
+                    if (!flyAbility.Enabled)
+                        equipper.ToggleEquippedItem();
                 }
             }
         }
