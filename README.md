@@ -4,7 +4,7 @@
 
 # AutoSuit
 
-Version 0.0.2  
+Version 0.0.3  
 For Game Version 0.26.2  
 Developed by 18107  
 Requires VoidManager 1.1.4

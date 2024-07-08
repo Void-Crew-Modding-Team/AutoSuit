@@ -27,11 +27,11 @@ namespace AutoSuit
                 FlyJetpack flyAbility = (FlyJetpack)flyAbilityField.GetValue(jetpack);
                 if (type == AirlockPressurizationType.Pressurize)
                 {
-                    DelayDo(() => { if (flyAbility.Enabled) equipper.ToggleEquippedItem(); }, 2000); //TODO replace with VoidManager.Utilities.Tools.DelayDo
+                    DelayDo(() => { if (flyAbility?.Enabled ?? false) equipper.ToggleEquippedItem(); }, 2000); //TODO replace with VoidManager.Utilities.Tools.DelayDo
                 }
                 else
                 {
-                    if (!flyAbility.Enabled)
+                    if (!(flyAbility?.Enabled ?? false))
                         equipper.ToggleEquippedItem();
                 }
             }
