@@ -9,7 +9,7 @@ namespace AutoSuit
     {
         internal const string PLUGIN_GUID = "id107.autosuit";
         internal const string PLUGIN_NAME = "AutoSuit";
-        internal const string PLUGIN_VERSION = "0.0.3";
+        internal const string PLUGIN_VERSION = "0.0.4";
     }
 
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
@@ -22,6 +22,7 @@ namespace AutoSuit
         {
             Log = Logger;
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), MyPluginInfo.PLUGIN_GUID);
+            Configs.Load(this);
             Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
         }
     }

@@ -2,11 +2,13 @@
 using CG.Game;
 using CG.Game.Player;
 using CG.Ship.Hull;
+using Gameplay.Atmosphere;
+using Gameplay.Utilities;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
+using Opsive.UltimateCharacterController.Traits;
 using System.Linq;
 using System.Reflection;
+using VoidManager.Utilities;
 
 namespace AutoSuit
 {
@@ -14,6 +16,7 @@ namespace AutoSuit
     internal class AirlockButtonPanelPatch
     {
         private static readonly FieldInfo flyAbilityField = AccessTools.Field(typeof(JetpackItem), "_flyAbility");
+        private static readonly FieldInfo OxygenDepositField = AccessTools.Field(typeof(LocalPlayer), "OxygenDeposit");
 
         [HarmonyPrefix]
         [HarmonyPatch("OnPressurizeButtonPressed")]
@@ -25,46 +28,34 @@ namespace AutoSuit
                 if (equipper == null) return;
                 JetpackItem jetpack = LocalPlayer.Instance.gameObject.GetComponentInChildren<JetpackItem>();
                 FlyJetpack flyAbility = (FlyJetpack)flyAbilityField.GetValue(jetpack);
+                ModifiableFloat jetpackOxygen = LocalPlayer.Instance.JetpackOxygen;
+                float oxygen = jetpackOxygen.Value;
                 if (type == AirlockPressurizationType.Pressurize)
                 {
-                    DelayDo(() => { if (flyAbility?.Enabled ?? false) equipper.ToggleEquippedItem(); }, 2000); //TODO replace with VoidManager.Utilities.Tools.DelayDo
+                    ____airlock.StateChanged += CheckRemoveSuit;
                 }
                 else
                 {
                     if (!(flyAbility?.Enabled ?? false))
                         equipper.ToggleEquippedItem();
                 }
-            }
-        }
 
-        //TODO remove everything below
-        private static List<Tuple<Action, DateTime>> tasks = new();
-
-        private static void DelayDo(Action action, double delayMs)
-        {
-            DateTime time = DateTime.Now.AddMilliseconds(delayMs);
-            tasks.Add(Tuple.Create(action, time));
-
-            if (tasks.Count == 1)
-            {
-                VoidManager.Events.Instance.LateUpdate += DoTasks;
-            }
-        }
-
-        private static void DoTasks(object sender, EventArgs e)
-        {
-            for (int i = tasks.Count - 1; i >= 0; i--)
-            {
-                if (tasks[i].Item2 <= DateTime.Now)
+                void CheckRemoveSuit()
                 {
-                    tasks[i].Item1.Invoke();
-                    tasks.RemoveAt(i);
-                }
-            }
+                    if (____airlock.IsPressurizing) return;
+                    ____airlock.StateChanged -= CheckRemoveSuit;
 
-            if (tasks.Count == 0)
-            {
-                VoidManager.Events.Instance.LateUpdate -= DoTasks;
+                    AtmosphereValues atmosphere = LocalPlayer.Instance.GetComponent<CharacterAtmosphericDataTracker>().AtmosphereData;
+                    if ((flyAbility?.Enabled ?? false) &&
+                        (!Configs.KeepColdConfig.Value || atmosphere.Temperature > -100) &&
+                        (!Configs.KeepHotConfig.Value || atmosphere.Temperature < 100) &&
+                        (!Configs.KeepOxygenConfig.Value || atmosphere.Oxygen > 0.02f))
+                    {
+                        equipper.ToggleEquippedItem();
+                        Attribute oxygen = (Attribute)OxygenDepositField.GetValue(LocalPlayer.Instance);
+                        oxygen.Value = oxygen.MaxValue;
+                    }
+                }
             }
         }
     }
