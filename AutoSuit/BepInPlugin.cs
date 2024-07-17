@@ -9,7 +9,7 @@ namespace AutoSuit
     {
         internal const string PLUGIN_GUID = "id107.autosuit";
         internal const string PLUGIN_NAME = "AutoSuit";
-        internal const string PLUGIN_VERSION = "0.0.4";
+        internal const string PLUGIN_VERSION = "0.0.5";
     }
 
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]

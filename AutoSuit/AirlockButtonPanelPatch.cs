@@ -32,7 +32,7 @@ namespace AutoSuit
                 float oxygen = jetpackOxygen.Value;
                 if (type == AirlockPressurizationType.Pressurize)
                 {
-                    ____airlock.StateChanged += CheckRemoveSuit;
+                    Tools.DelayDo(CheckRemoveSuit, 1000);
                 }
                 else
                 {
@@ -42,8 +42,11 @@ namespace AutoSuit
 
                 void CheckRemoveSuit()
                 {
-                    if (____airlock.IsPressurizing) return;
-                    ____airlock.StateChanged -= CheckRemoveSuit;
+                    if (____airlock.IsPressurizing)
+                    {
+                        Tools.DelayDo(CheckRemoveSuit, 1000);
+                        return;
+                    }
 
                     AtmosphereValues atmosphere = LocalPlayer.Instance.GetComponent<CharacterAtmosphericDataTracker>().AtmosphereData;
                     if ((flyAbility?.Enabled ?? false) &&
