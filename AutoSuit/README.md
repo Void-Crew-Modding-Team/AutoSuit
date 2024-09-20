@@ -2,7 +2,7 @@
 ![](https://img.shields.io/badge/Game%20Version-0.27.0-111111?style=flat&labelColor=24292f&color=111111)
 [![](https://img.shields.io/discord/1180651062550593536.svg?&logo=discord&logoColor=ffffff&style=flat&label=Discord&labelColor=24292f&color=111111)](https://discord.gg/g2u5wpbMGu "Void Crew Modding Discord")
 
-# Auto Suit
+# AutoSuit
 
 Version 0.0.6  
 For Game Version 0.27.0  
@@ -12,17 +12,22 @@ Requires VoidManager 1.2.0
 
 ---------------------
 
-### 💡 Function - Automatically equips (or unequips) the suit when pressing the pressurize lever in the airlock. Clientside.
+### 💡 Function - Automatically equips (or unequips) the suit when pressing the pressurize lever in the airlock. Client-side, Mod-session required to enable.
 
 ### 🎮 Client Usage
 
 - Install
 - Configure at F5 > Mod Settings > Auto Suit
 
+- Disables in vanilla, needs Mod_Session to enable.
+
 ### 👥 Multiplayer Functionality
 
 - ✅ Client
-  - Only the client needs this mod.
+	- Only the client needs this mod. Runs in vanilla sessions, but doesn't function until Mod_Session.
+
+- ✅ Mod Session
+	- Session needs to be marked as modded for functionality.
 
 ---------------------
 

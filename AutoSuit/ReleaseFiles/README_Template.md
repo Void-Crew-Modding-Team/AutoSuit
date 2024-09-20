@@ -19,10 +19,15 @@ Requires VoidManager [VoidManagerVersion]
 - Install
 - Configure at F5 > Mod Settings > Auto Suit
 
+- Disables in vanilla, needs Mod_Session to enable.
+
 ### 👥 Multiplayer Functionality
 
 - ✅ Client
-  - Only the client needs this mod.
+	- Only the client needs this mod. Runs in vanilla sessions, but doesn't function until Mod_Session.
+
+- ✅ Mod Session
+	- Session needs to be marked as modded for functionality.
 
 ---------------------
 

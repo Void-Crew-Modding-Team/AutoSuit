@@ -1,6 +1,7 @@
 ## 0.0.6
 
 - Updated for Update 5
+- Disables in vanilla, needs Mod_Session to enable.
 
 ## 0.0.5
 

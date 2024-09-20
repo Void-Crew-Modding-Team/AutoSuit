@@ -25,10 +25,17 @@ namespace AutoSuit
     }
     public class VoidManagerPlugin : VoidManager.VoidPlugin
     {
-        public override MultiplayerType MPType => MultiplayerType.Session;
+        internal static bool Enabled = true;
+        public override MultiplayerType MPType => MultiplayerType.Client;
 
         public override string Author => MyPluginInfo.PLUGIN_ORIGINAL_AUTHOR;
 
         public override string Description => MyPluginInfo.PLUGIN_DESCRIPTION;
+        public override VoidManager.SessionChangedReturn OnSessionChange(VoidManager.SessionChangedInput input)
+        {
+            Enabled = (input.IsHost || input.IsMod_Session);
+            VoidManager.SessionChangedReturn _return = new VoidManager.SessionChangedReturn() { SetMod_Session = true};
+            return _return;
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace AutoSuit
         [HarmonyPatch("OnPressurizeButtonPressed")]
         static void OnPressurizeButtonPressed(AirlockButtonPanel __instance, AirlockPressurizationType type, Airlock ____airlock)
         {
+            if (!VoidManagerPlugin.Enabled) return;
             if (__instance.name == "AirlockButtonPanel (1)" && !____airlock.IsPressurizing && !____airlock.airlockDoors.Any(door => door.IsOpen))
             {
                 ItemEquipper equipper = ClientGame.Current.PlayerShip.gameObject.GetComponentsInChildren<ItemEquipper>().FirstOrDefault(item => item.name == "JetpackRack");

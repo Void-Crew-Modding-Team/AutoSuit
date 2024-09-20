@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <AssemblyName>AutoSuit</AssemblyName>
-    <Description>Automatically equips (or unequips) the suit when pressing the pressurize lever in the airlock. Clientside.</Description>
+    <Description>Automatically equips (or unequips) the suit when pressing the pressurize lever in the airlock. Client-side, Mod-session required to enable.</Description>
     <Version>0.0.6</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
@@ -12,7 +12,7 @@
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
     <RootNamespace>AutoSuit</RootNamespace>
-    <AssemblyTitle>Automatically equips (or unequips) the suit when pressing the pressurize lever in the airlock. Clientside.</AssemblyTitle>
+    <AssemblyTitle>Automatically equips (or unequips) the suit when pressing the pressurize lever in the airlock. Client-side, Mod-session required to enable.</AssemblyTitle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>embedded</DebugType>
@@ -47,6 +47,10 @@
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>E:\Program Files\Steam\steamapps\common\Void Crew\Void Crew_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>E:\Program Files\Steam\steamapps\common\Void Crew\Void Crew_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VoidManager">
