@@ -14,6 +14,8 @@
 
 param ($OutputDir, $SolutionDir)
 $ConfigFilePath = "$PSScriptRoot\ReleaseFiles\ReleaseConfig.config"
+$ReleaseFilesDir = "$PSScriptRoot\ReleaseFiles"
+$IconFilePath = "$ReleaseFilesDir\icon.png"
 
 
 ### Simple INI reader. Credit to https://devblogs.microsoft.com/scripting/use-powershell-to-work-with-any-ini-file/
@@ -76,7 +78,7 @@ if ($BuildZip -and $PluginVersion)
     Write-Output "Building Zips..."
     [System.IO.Directory]::CreateDirectory("$OutputDir\Releases")
     Compress-Archive -Path "$OutputDir\README.md", "$OutputDir\CHANGELOG.md", "$OutputDir\manifest.json", "$OutputDir$PluginName.dll"   -DestinationPath "$OutputDir\Releases\$PluginName-$PluginVersion.zip" -Force
-    if(Test-Path "$OutputDir\Releases\icon.png")
+    if(Test-Path $IconFilePath)
     {
         Compress-Archive -Path "$OutputDir\icon.png" -DestinationPath "$OutputDir\Releases\$PluginName-$PluginVersion.zip" -Update
     }
