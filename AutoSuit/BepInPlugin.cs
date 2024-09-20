@@ -2,28 +2,33 @@
 using BepInEx.Logging;
 using HarmonyLib;
 using System.Reflection;
+using VoidManager.MPModChecks;
 
 namespace AutoSuit
 {
-    internal static class MyPluginInfo
-    {
-        internal const string PLUGIN_GUID = "id107.autosuit";
-        internal const string PLUGIN_NAME = "AutoSuit";
-        internal const string PLUGIN_VERSION = "0.0.5";
-    }
-
-    [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
+    [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.USERS_PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
     [BepInProcess("Void Crew.exe")]
-    [BepInDependency("VoidManager")]
+    [BepInDependency(VoidManager.MyPluginInfo.PLUGIN_GUID)]
     public class BepinPlugin : BaseUnityPlugin
     {
+        internal static BepinPlugin instance;
         internal static ManualLogSource Log;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "N/A")]
         private void Awake()
         {
+            instance = this;
             Log = Logger;
-            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), MyPluginInfo.PLUGIN_GUID);
+            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             Configs.Load(this);
             Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
         }
+    }
+    public class VoidManagerPlugin : VoidManager.VoidPlugin
+    {
+        public override MultiplayerType MPType => MultiplayerType.Session;
+
+        public override string Author => MyPluginInfo.PLUGIN_ORIGINAL_AUTHOR;
+
+        public override string Description => MyPluginInfo.PLUGIN_DESCRIPTION;
     }
 }
